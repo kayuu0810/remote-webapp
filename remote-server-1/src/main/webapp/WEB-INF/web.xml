@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+  <!--welcome pages-->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <!--配置springmvc DispatcherServlet-->
+  <servlet>
+    <servlet-name>springMVC</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <!--Sources标注的文件夹下需要新建一个spring文件夹-->
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring/spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springMVC</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>springMVC</servlet-name>
+    <url-pattern>/remoting/*</url-pattern>
+  </servlet-mapping>
+
+
+<!--hassian 远程暴露服务-->
+  <servlet>
+    <!-- 配置 HessianServlet，Servlet的名字随便配置，例如这里配置成ServiceServlet-->
+    <servlet-name>ServiceServlet</servlet-name>
+    <servlet-class>com.caucho.hessian.server.HessianServlet</servlet-class>
+    <!-- 配置服务的接口，参数名称home-api是固定写法，如果不是这种写法，会抛ServletException异常提示server must extend HessianServlet -->
+    <init-param>
+      <param-name>home-api</param-name>
+      <param-value>com.enci.HessianService</param-value>
+    </init-param>
+    <!-- 配置服务实现类， home-class固定写法-->
+    <init-param>
+      <param-name>home-class</param-name>
+      <param-value>com.enci.HessianServiceImpl</param-value>
+    </init-param>
+
+  </servlet>
+  <!-- 映射 HessianServlet的访问URL地址-->
+  <servlet-mapping>
+    <servlet-name>ServiceServlet</servlet-name>
+    <url-pattern>/hs</url-pattern>
+  </servlet-mapping>
+</web-app>

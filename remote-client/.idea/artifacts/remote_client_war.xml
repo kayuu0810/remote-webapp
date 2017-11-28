@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="remote-client:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="remote-client.war">
+      <element id="artifact" artifact-name="remote-client:war exploded" />
+    </root>
+  </artifact>
+</component>
